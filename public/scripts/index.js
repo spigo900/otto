@@ -103,7 +103,7 @@ GameBoardProto = {
       
       // If dead, use birth rule.
       else {
-        swapBoard[i] = this.survivalRule[neighbors];
+        swapBoard[i] = this.birthRule[neighbors];
       }
     }
   },
