@@ -6,4 +6,5 @@
   - Implement rule input via the checkboxes.
   - Implement play/stop behavior.
   - Implement board-clearing.
+  - Implement "Randomize" button.
   - Better documentation.
