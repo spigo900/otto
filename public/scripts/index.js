@@ -191,22 +191,32 @@ gameBoard.render();
 // CONTROLS //
 //////////////
 
+// Rule textbox and parse button
+const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
+const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
+
+// Survival rule checkboxes
+const survivalCheckbox = document.getElementsByClassName('automaton-survival-rule-checkbox');
+
+// Birth rule checkboxes
+const birthCheckbox = document.getElementsByClassName('automaton-birth-rule-checkbox');
+
 // Step button
-let stepButton = document.getElementsByClassName('automaton-step')[0];
+const stepButton = document.getElementsByClassName('automaton-step')[0];
 stepButton.addEventListener('click', () => {
   gameBoard.step();
   gameBoard.render();
 }, false)
 
 // Clear button
-let clearButton = document.getElementsByClassName('automaton-clear')[0];
+const clearButton = document.getElementsByClassName('automaton-clear')[0];
 clearButton.addEventListener('click', () => {
   gameBoard.clear();
   gameBoard.render();
 }, false)
 
 // Randomize button
-let randomizeButton = document.getElementsByClassName('automaton-randomize')[0];
+const randomizeButton = document.getElementsByClassName('automaton-randomize')[0];
 randomizeButton.addEventListener('click', () => {
   gameBoard = randomizedGameBoard();
   gameBoard.initialize();
@@ -216,4 +226,55 @@ randomizeButton.addEventListener('click', () => {
 // Click-to-toggle
 canvas.addEventListener('click', (ev) => {
   gameBoard.handleClick(ev);
+})
+
+// Updates-per-second box
+let updatesPerSecondBox = document.getElementsByClassName('automaton-updates-per-second')[0];
+const DEFAULT_UPDATES_PER_SECOND = 10.0;
+
+// Play/Stop button
+let playing = false;
+let playStopButton = document.getElementsByClassName('automaton-play-stop')[0];
+let playStateUpdateHandlerID;
+const CONTROLS_TO_DISABLE_WHEN_PLAYING = [
+  ruleField,
+  ruleParseButton,
+  survivalCheckbox[0], survivalCheckbox[1], survivalCheckbox[2],
+  survivalCheckbox[3], survivalCheckbox[4], survivalCheckbox[5],
+  survivalCheckbox[6], survivalCheckbox[7], survivalCheckbox[8],
+  birthCheckbox[0], birthCheckbox[1], birthCheckbox[2],
+  birthCheckbox[3], birthCheckbox[4], birthCheckbox[5],
+  birthCheckbox[6], birthCheckbox[7], birthCheckbox[8],
+  stepButton, updatesPerSecondBox, clearButton, randomizeButton
+]
+function toggleStoppedStateControls() {
+  for (let i = 0; i < CONTROLS_TO_DISABLE_WHEN_PLAYING.length; i++) {
+    const control = CONTROLS_TO_DISABLE_WHEN_PLAYING[i];
+    control.disabled = !control.disabled;
+  }
+}
+playStopButton.addEventListener('click', () => {
+  if (!playing) {
+    playStopButton.value = "Stop";
+    
+    let updatesPerSecond = parseFloat(updatesPerSecondBox.value);
+    if (!updatesPerSecond || isNaN(updatesPerSecond) || updatesPerSecond < 0) {
+      updatesPerSecond = DEFAULT_UPDATES_PER_SECOND;
+    }
+
+    playStateUpdateHandlerID = setInterval(
+      () => {
+        gameBoard.step();
+        gameBoard.render();
+      },
+      1000.0 / updatesPerSecond
+    );
+    toggleStoppedStateControls();
+  } else {
+    playStopButton.value = "Play";
+    clearInterval(playStateUpdateHandlerID);
+    playStateUpdateHandlerID = null;
+    toggleStoppedStateControls();
+  }
+  playing = !playing;
 })

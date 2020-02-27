@@ -4,4 +4,3 @@
   - Implement rule input via the checkboxes.
   - Implement rule parsing and error feedback for the "rule" textbox.
   - Better documentation.
-  - Implement play/stop behavior.
