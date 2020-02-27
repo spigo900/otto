@@ -130,6 +130,17 @@ GameBoardProto = {
         ctx.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
       }
     }
+  },
+
+  handleClick(ev) {
+    const rect = canvas.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    const col = Math.floor(x / tileSize);
+    const row = Math.floor(y / tileSize);
+    const index = this.boardIndex(row, col);
+    this.board[index] = !this.board[index];
+    this.render();
   }
 }
 
@@ -201,3 +212,8 @@ randomizeButton.addEventListener('click', () => {
   gameBoard.initialize();
   gameBoard.render();
 }, false)
+
+// Click-to-toggle
+canvas.addEventListener('click', (ev) => {
+  gameBoard.handleClick(ev);
+})
