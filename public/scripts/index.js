@@ -251,9 +251,10 @@ clearButton.addEventListener('click', () => {
 // Randomize button
 const randomizeButton = document.getElementsByClassName('automaton-randomize')[0];
 randomizeButton.addEventListener('click', () => {
-  gameBoard = randomizedGameBoard();
-  gameBoard.initialize();
-  gameBoard.render();
+  console.log("this is getting called right?")
+  window.gameBoard = randomizedGameBoard(getUISurvivalRule(), getUIBirthRule());
+  window.gameBoard.initialize();
+  window.gameBoard.render();
 }, false)
 
 // Click-to-toggle
