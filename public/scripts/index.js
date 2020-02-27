@@ -196,10 +196,16 @@ const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
 const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
 
 // Survival rule checkboxes
-const survivalCheckbox = document.getElementsByClassName('automaton-survival-rule-checkbox');
+const survivalCheckbox = (
+  [...document.getElementsByClassName('automaton-survival-rule-checkbox')]
+    .sort((a, b) => (a.id > b.id))
+);
 
 // Birth rule checkboxes
-const birthCheckbox = document.getElementsByClassName('automaton-birth-rule-checkbox');
+const birthCheckbox = (
+  [...document.getElementsByClassName('automaton-birth-rule-checkbox')]
+    .sort((a, b) => (a.id > b.id))
+);
 
 // Step button
 const stepButton = document.getElementsByClassName('automaton-step')[0];
@@ -239,12 +245,8 @@ let playStateUpdateHandlerID;
 const CONTROLS_TO_DISABLE_WHEN_PLAYING = [
   ruleField,
   ruleParseButton,
-  survivalCheckbox[0], survivalCheckbox[1], survivalCheckbox[2],
-  survivalCheckbox[3], survivalCheckbox[4], survivalCheckbox[5],
-  survivalCheckbox[6], survivalCheckbox[7], survivalCheckbox[8],
-  birthCheckbox[0], birthCheckbox[1], birthCheckbox[2],
-  birthCheckbox[3], birthCheckbox[4], birthCheckbox[5],
-  birthCheckbox[6], birthCheckbox[7], birthCheckbox[8],
+  ...survivalCheckbox,
+  ...birthCheckbox,
   stepButton, updatesPerSecondBox, clearButton, randomizeButton
 ]
 function toggleStoppedStateControls() {
