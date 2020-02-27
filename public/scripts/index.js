@@ -185,5 +185,19 @@ let stepButton = document.getElementsByClassName('automaton-step')[0];
 stepButton.addEventListener('click', () => {
   gameBoard.step();
   gameBoard.render();
-  
+}, false)
+
+// Clear button
+let clearButton = document.getElementsByClassName('automaton-clear')[0];
+clearButton.addEventListener('click', () => {
+  gameBoard.clear();
+  gameBoard.render();
+}, false)
+
+// Randomize button
+let randomizeButton = document.getElementsByClassName('automaton-randomize')[0];
+randomizeButton.addEventListener('click', () => {
+  gameBoard = randomizedGameBoard();
+  gameBoard.initialize();
+  gameBoard.render();
 }, false)

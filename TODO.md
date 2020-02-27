@@ -1,7 +1,5 @@
 # To do
 
-  - Implement board-clearing.
-  - Implement "Randomize" button.
   - Implement click-to-toggle for the game board.
   - Implement press-to-paint for the game board.
   - Implement rule input via the checkboxes.
