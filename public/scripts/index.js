@@ -132,7 +132,7 @@ GameBoardProto = {
     }
   },
 
-  handleClick(ev) {
+  handleCanvasClick(ev) {
     const rect = canvas.getBoundingClientRect();
     const x = ev.clientX - rect.left;
     const y = ev.clientY - rect.top;
@@ -141,10 +141,18 @@ GameBoardProto = {
     const index = this.boardIndex(row, col);
     this.board[index] = !this.board[index];
     this.render();
+  },
+
+  handleSurvivalRuleChange(newSurvivalRule) {
+    this.survivalRule = newSurvivalRule;
+  },
+
+  handleBirthRuleChange(newBirthRule) {
+    this.birthRule = newBirthRule;
   }
 }
 
-function GameBoard(width, height, birthRule, survivalRule) {
+function GameBoard(width, height, survivalRule, birthRule) {
   if (birthRule.length !== MAX_ADJACENT_TILES + 1) {
     console.error('Bad birth rule!');
     return {};
@@ -163,16 +171,13 @@ function GameBoard(width, height, birthRule, survivalRule) {
   return board;
 }
 
-function defaultGameBoard() {
-  let board = GameBoard(
-    DEFAULT_BOARD_SIZE, DEFAULT_BOARD_SIZE, CONWAY_BIRTH, CONWAY_SURVIVAL
-  );
-  return board;
-}
+///////////
+// SETUP //
+///////////
 
-function randomizedGameBoard() {
+function randomizedGameBoard(survivalRule, birthRule) {
   const p = 0.5;
-  let gameBoard = defaultGameBoard();
+  let gameBoard = GameBoard(DEFAULT_BOARD_SIZE, DEFAULT_BOARD_SIZE, survivalRule, birthRule);
   let board = gameBoard.board;
 
   for (let i = 0; i < board.length; i++) {
@@ -182,7 +187,7 @@ function randomizedGameBoard() {
   return gameBoard;
 }
 
-let gameBoard = randomizedGameBoard();
+let gameBoard = randomizedGameBoard(CONWAY_SURVIVAL, CONWAY_BIRTH);
 gameBoard.initialize();
 gameBoard.render();
 
@@ -196,16 +201,38 @@ const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
 const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
 
 // Survival rule checkboxes
-const survivalCheckbox = (
+const survivalCheckboxes = (
   [...document.getElementsByClassName('automaton-survival-rule-checkbox')]
     .sort((a, b) => (a.id > b.id))
 );
 
+function getUISurvivalRule() {
+  return survivalCheckboxes.map((x) => x.checked);
+}
+
+survivalCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', () => {
+    if (checkbox.disabled) {console.error('disabled'); return;}
+    gameBoard.handleSurvivalRuleChange(getUISurvivalRule());
+  }, false)
+})
+
 // Birth rule checkboxes
-const birthCheckbox = (
+const birthCheckboxes = (
   [...document.getElementsByClassName('automaton-birth-rule-checkbox')]
     .sort((a, b) => (a.id > b.id))
 );
+
+function getUIBirthRule() {
+  return birthCheckboxes.map((x) => x.checked);
+}
+
+birthCheckboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', () => {
+    if (checkbox.disabled) {console.error('disabled'); return;}
+    gameBoard.handleBirthRuleChange(getUIBirthRule());
+  }, false)
+})
 
 // Step button
 const stepButton = document.getElementsByClassName('automaton-step')[0];
@@ -231,7 +258,7 @@ randomizeButton.addEventListener('click', () => {
 
 // Click-to-toggle
 canvas.addEventListener('click', (ev) => {
-  gameBoard.handleClick(ev);
+  gameBoard.handleCanvasClick(ev);
 })
 
 // Updates-per-second box
@@ -245,8 +272,8 @@ let playStateUpdateHandlerID;
 const CONTROLS_TO_DISABLE_WHEN_PLAYING = [
   ruleField,
   ruleParseButton,
-  ...survivalCheckbox,
-  ...birthCheckbox,
+  ...survivalCheckboxes,
+  ...birthCheckboxes,
   stepButton, updatesPerSecondBox, clearButton, randomizeButton
 ]
 function toggleStoppedStateControls() {
