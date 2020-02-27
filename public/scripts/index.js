@@ -180,8 +180,6 @@ gameBoard.render();
 // CONTROLS //
 //////////////
 
-// TODO: Click canvas to alter the state of a game tile.
-
 // Step button
 let stepButton = document.getElementsByClassName('automaton-step')[0];
 stepButton.addEventListener('click', () => {
@@ -189,5 +187,3 @@ stepButton.addEventListener('click', () => {
   gameBoard.render();
   
 }, false)
-
-// TODO: 
