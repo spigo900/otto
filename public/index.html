@@ -12,11 +12,44 @@
                 <input type="button" class="automaton-submit" value="Parse" />
             </div>
             <div class="rules-row">
-                <!-- TODO: write this -->
+                <div class="rules-box">
+                    <div class="survival-rules">
+                        <label>Survival</label>
+                        <input type="checkbox" id="survival0" />
+                        <input type="checkbox" id="survival1" />
+                        <input type="checkbox" id="survival2" checked />
+                        <input type="checkbox" id="survival3" checked />
+                        <input type="checkbox" id="survival4" />
+                        <input type="checkbox" id="survival5" />
+                        <input type="checkbox" id="survival6" />
+                        <input type="checkbox" id="survival7" />
+                        <input type="checkbox" id="survival8" />
+                    </div>
+
+                    <div class="birth-rules">
+                        <label>Birth</label>
+                        <input type="checkbox" id="birth0" />
+                        <input type="checkbox" id="birth1" />
+                        <input type="checkbox" id="birth2" />
+                        <input type="checkbox" id="birth3" checked />
+                        <input type="checkbox" id="birth4" />
+                        <input type="checkbox" id="birth5" />
+                        <input type="checkbox" id="birth6" />
+                        <input type="checkbox" id="birth7" />
+                        <input type="checkbox" id="birth8" />
+                    </div>
+                </div>
             </div>
             <div class="controls-row">
-                <!-- TODO: write this -->
                 <input type="button" class="automaton-step" value="Step" />
+                <span class="automaton-play-controls">
+                    <span>
+                        <label>Updates per second</label>
+                        <input type="text" class="automaton-ups" value="1" />
+                    </span>
+                    <input type="button" class="automaton-play" value="Play" />
+                </span>
+                <input type="button" class="automaton-clear" value="Clear" />
             </div>
         </div>
         <script src="scripts/index.js"></script>
