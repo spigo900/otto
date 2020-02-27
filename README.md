@@ -2,6 +2,12 @@
 
 A program intended to help visualize different cellular automaton rules.
 
+Otto simulates a cellular automaton on a toroidal game board (one where the top
+edge connects to the bottom edge and the left connects to the right) with
+user-defined birth and death rules.
+
+![(Figure: Sketch of the UI)](ui_sketch.png)
+
 
 # Usage
 
