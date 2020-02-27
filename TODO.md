@@ -1,5 +1,6 @@
 # To do
 
   - Implement click-and-drag-to-paint for the game board.
-  - Implement rule parsing and error feedback for the "rule" textbox.
+  - Implement a rules dropdown box with some rules from Wikipedia.
+    - I'll have to figure out where to put this. Work it into the sketch.
   - Better documentation.

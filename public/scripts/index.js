@@ -143,16 +143,16 @@ GameBoardProto = {
     this.render();
   },
 
-  handleSurvivalRuleChange(newSurvivalRule) {
-    this.survivalRule = newSurvivalRule;
-  },
-
   handleBirthRuleChange(newBirthRule) {
     this.birthRule = newBirthRule;
+  },
+
+  handleSurvivalRuleChange(newSurvivalRule) {
+    this.survivalRule = newSurvivalRule;
   }
 }
 
-function GameBoard(width, height, survivalRule, birthRule) {
+function GameBoard(width, height, birthRule, survivalRule) {
   if (birthRule.length !== MAX_ADJACENT_TILES + 1) {
     console.error('Bad birth rule!');
     return {};
@@ -175,9 +175,9 @@ function GameBoard(width, height, survivalRule, birthRule) {
 // SETUP //
 ///////////
 
-function randomizedGameBoard(survivalRule, birthRule) {
+function randomizedGameBoard(birthRule, survivalRule) {
   const p = 0.5;
-  let gameBoard = GameBoard(DEFAULT_BOARD_SIZE, DEFAULT_BOARD_SIZE, survivalRule, birthRule);
+  let gameBoard = GameBoard(DEFAULT_BOARD_SIZE, DEFAULT_BOARD_SIZE, birthRule, survivalRule);
   let board = gameBoard.board;
 
   for (let i = 0; i < board.length; i++) {
@@ -187,7 +187,7 @@ function randomizedGameBoard(survivalRule, birthRule) {
   return gameBoard;
 }
 
-let gameBoard = randomizedGameBoard(CONWAY_SURVIVAL, CONWAY_BIRTH);
+let gameBoard = randomizedGameBoard(CONWAY_BIRTH, CONWAY_SURVIVAL);
 gameBoard.initialize();
 gameBoard.render();
 
@@ -195,10 +195,6 @@ gameBoard.render();
 //////////////
 // CONTROLS //
 //////////////
-
-// Rule textbox and parse button
-const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
-const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
 
 // Survival rule checkboxes
 const survivalCheckboxes = (
@@ -234,6 +230,59 @@ birthCheckboxes.forEach((checkbox) => {
   }, false)
 })
 
+// Rule textbox and parse button
+const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
+const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
+
+// Parse the birth and survival rules represented by the given string
+function parseRuleString(rule) {
+  let survivalRule = Array(MAX_ADJACENT_TILES + 1).fill(false);
+  let birthRule = Array(MAX_ADJACENT_TILES + 1).fill(false);
+
+  let idx = 0;
+  if (rule[idx] === 'B') { idx += 1; }
+
+  // https://stackoverflow.com/questions/8935632/check-if-character-is-number/8935688#8935688
+  while (rule[idx] >= '0' && rule[idx] <= '9') {
+    let nNeighbors = parseInt(rule[idx]);
+    birthRule[nNeighbors] = true;
+    idx += 1;
+  }
+
+  if (rule[idx] !== '/') { return null; }
+  else { idx += 1; }
+
+  if (rule[idx] === 'S') { idx += 1; }
+  while (rule[idx] >= '0' && rule[idx] <= '9') {
+    let nNeighbors = parseInt(rule[idx]);
+    survivalRule[nNeighbors] = true;
+    idx += 1;
+  }
+
+  return {survivalRule, birthRule}
+}
+
+// Rule parsing button functionality
+handleRuleParse = () => {
+  let parsed = parseRuleString(ruleField.value);
+  // TODO display an error
+  if (!parsed) { return; }
+
+  parsed.survivalRule.forEach((survives, i) => {
+    survivalCheckboxes[i].checked = survives;
+  })
+  parsed.birthRule.forEach((born, i) => {
+    birthCheckboxes[i].checked = born;
+  })
+}
+
+ruleParseButton.addEventListener('click', handleRuleParse, false)
+ruleField.addEventListener('keyup', (ev) => {
+  if (ev.key === 'Enter') {
+    handleRuleParse();
+  }
+}, false)
+
 // Step button
 const stepButton = document.getElementsByClassName('automaton-step')[0];
 stepButton.addEventListener('click', () => {
@@ -251,7 +300,7 @@ clearButton.addEventListener('click', () => {
 // Randomize button
 const randomizeButton = document.getElementsByClassName('automaton-randomize')[0];
 randomizeButton.addEventListener('click', () => {
-  gameBoard = randomizedGameBoard(getUISurvivalRule(), getUIBirthRule());
+  gameBoard = randomizedGameBoard(getUIBirthRule(), getUISurvivalRule());
   gameBoard.initialize();
   gameBoard.render();
 }, false)
