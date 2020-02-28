@@ -13,7 +13,7 @@ const MAX_NEIGHBORS = 8;
 const CONWAY_BIRTH = [false, false, false, true, false, false, false, false, false];
 const CONWAY_SURVIVAL = [false, false, true, true, false, false, false, false, false];
 
-// Prototype g
+// Prototype game board object.
 GameBoardProto = {
   // The cellular automaton board.
   board: Array(DEFAULT_BOARD_SIZE * DEFAULT_BOARD_SIZE).fill(false),
