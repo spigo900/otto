@@ -1,12 +1,15 @@
 # Otto
 
-A program intended to help visualize different cellular automaton rules.
+A program intended to help visualize different [Life-like cellular automaton
+rules][life_like].
 
 Otto simulates a cellular automaton on a toroidal game board (one where the top
 edge connects to the bottom edge and the left connects to the right) with
 user-defined birth and death rules.
 
 ![(Figure: Screenshot of the UI)](screenshot.png)
+
+[life_like]: https://en.wikipedia.org/wiki/Life-like_cellular_automaton
 
 
 # Usage
