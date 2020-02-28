@@ -61,6 +61,7 @@ h1 {
 /* Canvas/display stuff */
 .viewport {
     margin: 1em;
+    border: 1px solid black;
 }
 
 /* Two-column layout */
