@@ -32,33 +32,50 @@ GameBoardProto = {
   birthRule: CONWAY_BIRTH,
   survivalRule: CONWAY_SURVIVAL,
 
-  // Initialize the board and canvas.
-  //
-  // This primarily means setting the canvas to be exactly big enough to hold
-  // the board.
+  /**
+   * Initialize the board and canvas.
+   *
+   * This primarily means setting the canvas to be exactly big enough to hold
+   * the board.
+   */
   initialize() {
     canvas.width = this.boardSize.width * CELL_DISPLAY_SIZE;
     canvas.height = this.boardSize.height * CELL_DISPLAY_SIZE;
   },
 
-  // Clear the board, setting all cells' state to dead.
+  /**
+   * Clear the board, setting all cells' state to dead.
+   */
   clear() {
     this.board.fill(false);
   },
 
-  // Get the row and column of the item at the given board index.
+  /**
+   * Get the board row and column corresponding to the given board index.
+   * @param {Number} boardIndex An index into the board array
+   * @returns {[Number, Number]} The row and column numbers
+   */
   rowCol(boardIndex) {
     const row = Math.floor(boardIndex / this.boardSize.width);
     const col = boardIndex % this.boardSize.width;
     return [row, col]
   },
 
-  // Get the index of the board item at the given row and column.
+  /**
+   * Get the board index corresponding to the given board row and column.
+   * @param {Number} row The row of the board item
+   * @param {Number} col The column of the board item
+   * @returns {Number} The index of the board item
+   */
   boardIndex(row, col) {
     return row * this.boardSize.width + col;
   },
 
-  // Resize the board to the given width and height.
+  /**
+   * Resize the board to the given width and height.
+   * @param {Number} width The width
+   * @param {Number} height The height
+   */
   resizeBoard(width, height) {
     // Create a new empty board and copy over all the tiles from the existing
     // board.
@@ -75,7 +92,12 @@ GameBoardProto = {
     this.swapBoard = Array(width * height).fill(false);
   },
 
-  // Compute and return the number of neighbors of the cell at board index i.
+  /**
+   * Compute and return the number of living neighbors of the cell at the given
+   * board index.
+   * @param {Number} i The board index of the cell whose living neighbors are to be counted
+   * @returns {Number} The number of living neighbors of the cell
+   */
   neighborsAlive(i) {
     // First, figure out which tiles are neighbors of tile i.
     const lastRow = this.boardSize.height - 1;
@@ -104,8 +126,11 @@ GameBoardProto = {
     return alive;
   },
 
-  // Compute the next state for Conway's game of life, writing the state to
-  // swapBoard.
+  /**
+   * Compute the next state for Conway's game of life, writing the state to
+   * swapBoard.
+   * @param {Array<Boolean>} swapBoard A board-sized array to which the computed next state can be written
+   */
   calculateStep(swapBoard) {
     for (let i = 0; i < this.board.length; i++) {
       let neighbors = this.neighborsAlive(i);
@@ -122,7 +147,9 @@ GameBoardProto = {
     }
   },
 
-  // Advance the cellular automaton by one step.
+  /**
+   * Advance the cellular automaton by one step.
+   */
   step() {
     this.calculateStep(this.swapBoard);
     
@@ -132,7 +159,9 @@ GameBoardProto = {
     this.swapBoard = newSwap;
   },
 
-  // Render the cellular automaton's current state to the canvas.
+  /**
+   * Render the cellular automaton's current state to the canvas.
+   */
   render() {
     // First clear the context.
     ctx.fillStyle = DEAD_COLOR;
@@ -151,7 +180,10 @@ GameBoardProto = {
     }
   },
 
-  // Handle a click on the canvas to allow painting tiles.
+  /**
+   * Handle a click on the canvas to allow painting tiles.
+   * @param {Event} ev The click event
+   */
   handleCanvasClick(ev) {
     const rect = canvas.getBoundingClientRect();
     const x = ev.clientX - rect.left;
@@ -163,19 +195,31 @@ GameBoardProto = {
     this.render();
   },
 
-  // Update the birth rule when the checkboxes change.
+  /**
+   * Update the birth rule when the checkboxes change.
+   * @param {Array<Boolean>} newBirthRule The new birth rule
+   */
   handleBirthRuleChange(newBirthRule) {
     this.birthRule = newBirthRule;
   },
 
-  // Update the survival rule when the checkboxes change.
+  /**
+   * Update the survival rule when the checkboxes change.
+   * @param {Array<Boolean>} newSurvivalRule The new survival rule
+   */
   handleSurvivalRuleChange(newSurvivalRule) {
     this.survivalRule = newSurvivalRule;
   }
 }
 
-// Constructor-like function to create a new GameBoard (based on the GameBoard
-// prototype GameBoardProto).
+/**
+ * Constructor-like function to create a new GameBoard (based on the GameBoard
+ * prototype GameBoardProto).
+ * @param {Number} width Width of the game board
+ * @param {Number} height Height of the game board
+ * @param {Array<Boolean>} birthRule The birth rule
+ * @param {Array<Boolean>} survivalRule The survival rule
+ */
 function GameBoard(width, height, birthRule, survivalRule) {
   if (birthRule.length !== MAX_NEIGHBORS + 1) {
     console.error('Bad birth rule!');
@@ -199,7 +243,11 @@ function GameBoard(width, height, birthRule, survivalRule) {
 // SETUP //
 ///////////
 
-// Create a randomized game board with the specified birth and survival rules.
+/**
+ * Create a randomized game board with the specified birth and survival rules.
+ * @param {Array<Boolean>} birthRule The birth rule
+ * @param {Array<Boolean>} survivalRule The survival rule
+ */
 function randomizedGameBoard(birthRule, survivalRule) {
   const p = 0.5;
   let gameBoard = GameBoard(
@@ -230,8 +278,10 @@ const survivalCheckboxes = (
     .sort((a, b) => (a.id > b.id))
 );
 
-// Get the current survival rule as specified by the UI. This is a boolean
-// array.
+/**
+ * Get the current survival rule as specified by the UI.
+ * @returns {Boolean<Array>} The current survival rule
+ */
 function getUISurvivalRule() {
   return survivalCheckboxes.map((x) => x.checked);
 }
@@ -250,7 +300,10 @@ const birthCheckboxes = (
     .sort((a, b) => (a.id > b.id))
 );
 
-// Get the current birth rule as specified by the UI. This is a boolean array.
+/**
+ * Get the current birth rule as specified by the UI.
+ * @returns {Boolean<Array>} The current birth rule
+ */
 function getUIBirthRule() {
   return birthCheckboxes.map((x) => x.checked);
 }
@@ -267,10 +320,14 @@ birthCheckboxes.forEach((checkbox) => {
 const ruleField = document.getElementsByClassName('automaton-rule-field')[0];
 const ruleParseButton = document.getElementsByClassName('automaton-rule-parse')[0];
 
-// Parse the birth and survival rules represented by the given string.
-//
-// The rules thus parsed are returned as an object with the rules under the
-// keys 'birthRule' and 'survivalRule'.
+/**
+ * Parse the birth and survival rules represented by the given string.
+ *
+ * The rules thus parsed are returned as an object with the rules under the
+ * keys 'birthRule' and 'survivalRule'.
+ * @param {String} rule The rule string
+ * @returns {Object} The survival rule and birth rule bundled together
+ */
 function parseRuleString(rule) {
   let survivalRule = Array(MAX_NEIGHBORS + 1).fill(false);
   let birthRule = Array(MAX_NEIGHBORS + 1).fill(false);
@@ -360,6 +417,9 @@ const CONTROLS_TO_DISABLE_WHEN_PLAYING = [
   ...birthCheckboxes,
   stepButton, updatesPerSecondBox, clearButton, randomizeButton
 ]
+/**
+ * Toggle all controls that get toggled when the user presses Play/Stop.
+ */
 function toggleStoppedStateControls() {
   for (let i = 0; i < CONTROLS_TO_DISABLE_WHEN_PLAYING.length; i++) {
     const control = CONTROLS_TO_DISABLE_WHEN_PLAYING[i];
