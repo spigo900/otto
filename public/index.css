@@ -73,6 +73,15 @@ h1 {
     width: auto;
 }
 
+/* Text field label styling */
+.text-field-label {
+    font-weight: bold;
+}
+
+.automaton-rule-field-label {
+    line-height: 1.5em;
+}
+
 /* Rules box styling */
 .rules-box {
     border: 1px solid black;

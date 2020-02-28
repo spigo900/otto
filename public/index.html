@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Otto, the cellular automaton calculator</title>
         <link rel="stylesheet" href="index.css" />
+        <meta charset='utf-8'>
     </head>
     <body>
         <h1>Otto</h1>
@@ -12,11 +14,14 @@
             <div class="string-row">
                 <table>
                     <tr>
-                        <tc><input type="text" class="automaton-rule-field" value="B3/S23" /></tc>
-                        <tc><input type="button" class="automaton-rule-parse" value="Parse" /></tc>
+                        <td><label class="text-field-label automaton-rule-field-label">Rule string</label></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="automaton-rule-field" value="B3/S23" /></td>
+                        <td><input type="button" class="automaton-rule-parse" value="Parse" /></td>
                     </tr>
                 </table>
-                
             </div>
             <div class="rules-row">
                 <table class="rules-box">
@@ -63,18 +68,50 @@
             <div class="controls-row">
                 <table class="controls">
                     <tr>
-                        <td><label>Updates per second</label></td>
-                        <td><input type="button" class="automaton-step automaton-play-col-control" value="Step" /></td>
+                        <td>
+                            <label class="text-field-label">
+                                Updates per second
+                            </label>
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="automaton-step automaton-play-col-control"
+                                value="Step"
+                            />
+                        </td>
                     </tr>
                     <tr class="automaton-play-controls">
                         <td class="controls-to-right">
-                            <input type="text" class="automaton-updates-per-second" value="10" />
+                            <input
+                                type="text"
+                                class="automaton-updates-per-second automaton-randomize-col-control"
+                                value="10"
+                            />
                         </td>
-                        <td><input type="button" class="automaton-play-stop automaton-play-col-control" value="Play" /></td>
+                        <td>
+                            <input
+                                type="button"
+                                class="automaton-play-stop automaton-play-col-control"
+                                value="Play"
+                            />
+                        </td>
                     </tr>
                     <tr class="automation-setup-controls">
-                        <td class="controls-to-right"><input type="button" class="automaton-randomize" value="Randomize" /></td>
-                        <td><input type="button" class="automaton-clear automaton-play-col-control" value="Clear" /></td>
+                        <td class="controls-to-right">
+                            <input
+                                type="button"
+                                class="automaton-randomize automaton-randomize-col-control"
+                                value="Randomize"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="automaton-clear automaton-play-col-control"
+                                value="Clear"
+                            />
+                        </td>
                     </tr>
                 </table>
             </div>
