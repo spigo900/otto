@@ -1,7 +1,8 @@
 # To do
 
+Some ideas for improving Otto.
+
   - Better documentation.
-  - Label for the "rule string" field.
   - Display an error when the user-entered rule (in the rule string field) is
     empty.
   - Implement click-and-drag-to-paint for the game board.
