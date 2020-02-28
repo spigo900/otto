@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Otto, the cellular automaton calculator</title>
+        <link rel="stylesheet" href="index.css" />
     </head>
     <body>
         <h1>Otto</h1>
@@ -13,47 +14,64 @@
                 <input type="button" class="automaton-rule-parse" value="Parse" />
             </div>
             <div class="rules-row">
-                <div class="rules-box">
-                    <div class="birth-rules">
-                        <label>Birth</label>
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth0" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth1" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth2" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth3" checked />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth4" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth5" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth6" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth7" />
-                        <input type="checkbox" class="automaton-birth-rule-checkbox" id="birth8" />
-                    </div>
+                <table class="rules-box">
+                    <tr class="rule-numbers">
+                        <td></td>
+                        <td><label>0</label></td>
+                        <td><label>1</label></td>
+                        <td><label>2</label></td>
+                        <td><label>3</label></td>
+                        <td><label>4</label></td>
+                        <td><label>5</label></td>
+                        <td><label>6</label></td>
+                        <td><label>7</label></td>
+                        <td><label>8</label></td>
+                    </tr>
 
-                    <div class="survival-rules">
-                        <label>Survival</label>
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival0" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival1" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival2" checked />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival3" checked />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival4" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival5" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival6" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival7" />
-                        <input type="checkbox" class="automaton-survival-rule-checkbox" id="survival8" />
-                    </div>
-                </div>
+                    <tr class="birth-rules">
+                        <td><label>Birth</label></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth0" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth1" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth2" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth3" checked /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth4" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth5" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth6" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth7" /></td>
+                        <td><input type="checkbox" class="automaton-birth-rule-checkbox" id="birth8" /></td>
+                    </tr>
+
+                    <tr class="survival-rules">
+                        <td><label>Survival</label></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival0" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival1" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival2" checked /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival3" checked /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival4" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival5" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival6" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival7" /></td>
+                        <td><input type="checkbox" class="automaton-survival-rule-checkbox" id="survival8" /></td>
+                    </tr>
+                </table>
             </div>
             <div class="controls-row">
-                <input type="button" class="automaton-step" value="Step" />
-                <span class="automaton-play-controls">
-                    <span>
-                        <label>Updates per second</label>
-                        <input type="text" class="automaton-updates-per-second" value="10" />
-                    </span>
-                    <input type="button" class="automaton-play-stop" value="Play" />
-                </span>
-                <span class="automation-setup-controls">
-                    <input type="button" class="automaton-randomize" value="Randomize" />
-                    <input type="button" class="automaton-clear" value="Clear" />
-                </span>
+                <table class="controls">
+                    <tr>
+                        <td><label>Updates per second</label></td>
+                        <td><input type="button" class="automaton-step automaton-play-col-control" value="Step" /></td>
+                    </tr>
+                    <tr class="automaton-play-controls">
+                        <td class="controls-to-right">
+                            <input type="text" class="automaton-updates-per-second" value="10" />
+                        </td>
+                        <td><input type="button" class="automaton-play-stop automaton-play-col-control" value="Play" /></td>
+                    </tr>
+                    <tr class="automation-setup-controls">
+                        <td class="controls-to-right"><input type="button" class="automaton-randomize" value="Randomize" /></td>
+                        <td><input type="button" class="automaton-clear automaton-play-col-control" value="Clear" /></td>
+                    </tr>
+                </table>
             </div>
         </div>
         <script src="scripts/index.js"></script>
