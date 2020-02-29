@@ -366,6 +366,9 @@ handleRuleParse = () => {
   parsed.birthRule.forEach((born, i) => {
     birthCheckboxes[i].checked = born;
   })
+
+  gameBoard.handleBirthRuleChange(getUIBirthRule());
+  gameBoard.handleSurvivalRuleChange(getUISurvivalRule());
 }
 
 ruleParseButton.addEventListener('click', handleRuleParse, false)
